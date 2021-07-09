@@ -1,0 +1,28 @@
+
+
+/* application wide font settings*/
+@font-face {
+  font-family: $base-font;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $base-font;
+  min-height: 100vh;
+  height: auto;
+  width: 100%;
+  background-color: $base-color;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $base-font-color;
+}
+
+
+

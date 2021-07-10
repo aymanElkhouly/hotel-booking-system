@@ -13,7 +13,9 @@
          </select>
      </div>
      <div class="col-4 col-md-2 mt-md-0 mt-2">
-       <button class="btn btn-danger float-end clearfix">+ Create</button>
+       <button class="btn btn-primary float-end clearfix create-btn">
+         +  Create
+       </button>
      </div>
    </div>
    <div class="row mt-4">

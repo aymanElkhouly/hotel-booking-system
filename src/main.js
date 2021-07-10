@@ -5,6 +5,6 @@ import router from './router'
 import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
-// Importing the global css file
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import '@/stylesheets/index.scss'
 createApp(App).use(store).use(router).mount('#app')

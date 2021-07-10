@@ -1,14 +1,26 @@
+import { mapGetters } from 'vuex'
 export default {
   name: 'booking-list',
   components: {},
   data () {
-    return {}
+    return {
+
+    }
   },
   created () {
 
   },
   mounted () {
   },
-  methods: {},
-  computed: {}
+  methods: {
+    create () {
+      this.$router.push({ name: 'createBooking' })
+    },
+    edit () {
+      this.$router.push({ name: 'editBooking', params: { id: '10' } })
+    }
+  },
+  computed: {
+    ...mapGetters({ bookingList: 'getBookings' })
+  }
 }

@@ -10,10 +10,10 @@
          <option value="1">One</option>
          <option value="2">Two</option>
          <option value="3">Three</option>
-         </select>
+       </select>
      </div>
      <div class="col-4 col-md-2 mt-md-0 mt-2">
-       <button class="btn btn-primary float-end clearfix create-btn">
+       <button @click="create" class="btn btn-primary float-end clearfix create-btn">
          +  Create
        </button>
      </div>
@@ -42,7 +42,14 @@
            <td>Mark</td>
            <td>Otto</td>
            <td>@mdo</td>
-           <td>@mdo</td>
+           <td>
+             <span class="mx-1">
+               <i @click="edit" class="bi bi-pencil-square"></i>
+             </span>
+             <span class="mx-1">
+               <i class="bi bi-x"></i>
+             </span>
+           </td>
          </tr>
          <tr>
            <th scope="row">2</th>

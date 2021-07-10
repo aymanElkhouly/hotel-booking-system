@@ -1,0 +1,11 @@
+.create-btn{
+  color: white;
+  background-color: $btn-base-color;
+  border-color: $btn-hover-color;
+  text-transform: uppercase;
+  font-size: 15px;
+  &:hover{
+    color: white;
+    background-color: $btn-hover-color;
+  }
+}

@@ -4,18 +4,25 @@ export default {
     bookings: []
   },
   mutations: {
-    bookAppointment (state, payload) {
+    bookRoom (state, payload) {
       state.bookings.push(payload)
     }
   },
   actions: {
-    bookAppointment ({ commit }, payload) {
-      commit('bookAppointment', payload)
+    bookRoom ({ commit }, payload) {
+      commit('bookRoom', payload)
     }
   },
   getters: {
-    getAppointments (state) {
+    getBookings (state) {
       return state.bookings
+    },
+    getBookingDetails: (state) => (id) => {
+      //* * Store Getters With Query **//
+      return state.bookings.find(item => item.id === id)
+    },
+    getBookingsDates (state) {
+      return state.bookings.map(item => item.date)
     }
   }
 }

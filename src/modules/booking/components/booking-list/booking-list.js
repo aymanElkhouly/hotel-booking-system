@@ -26,7 +26,11 @@ export default {
     }
   },
   computed: {
+
     ...mapGetters({ bookingList: 'getBookingList' }),
+
+    ...mapGetters({ rooms: 'getRooms' }),
+
     filteredList () {
       return this.bookingList.filter(item => {
         const roomFilter = item.room.title.toLowerCase().includes(this.roomSearch.toLowerCase())

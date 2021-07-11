@@ -7,10 +7,9 @@
       <div class="col-7 col-md-4 mt-md-0 mt-2">
         <select class="form-select" v-model="roomSearch">
           <option value="" selected>Filter by room name</option>
-          <option value="Sea_view1">Sea_view1</option>
-          <option value="Sea_view2">Sea_view2</option>
-          <option value="Garden_view1">Garden_view1</option>
-          <option value="Garden_view2">Garden_view2</option>
+          <option v-for="item in rooms" :key="item.id" :value="item.title">
+            {{ item.title }}
+          </option>
         </select>
       </div>
       <div class="col-5 col-md-2 mt-md-0 mt-2">

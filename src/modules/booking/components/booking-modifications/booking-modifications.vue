@@ -90,13 +90,15 @@
       <div class="row">
         <div class="col-12 col-md-6 pe-5 mb-3">
           <label for="price" class="form-label">Price</label>
-          <input type="text" class="form-control" id="price" v-model="price">
+          <input disabled type="text" class="form-control" id="price" :value="price">
         </div>
         <div class="col-12 col-md-6 ps-5 mb-3">
           <label class="form-label"></label>
           <div class="row mt-2">
             <div class="col-6 ">
-              <button type="submit" class="btn create-btn  w-100">Submit</button>
+              <button type="submit" class="btn create-btn  w-100">
+                {{id ? 'Update' : 'Create'}}
+              </button>
             </div>
             <div class="col-6">
               <button @click="cancel" type="button" class="btn btn-secondary w-100">Cancel</button>

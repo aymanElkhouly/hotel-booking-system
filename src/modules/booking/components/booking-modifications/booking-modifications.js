@@ -48,6 +48,7 @@ export default {
     }
   },
   methods: {
+
     getInitialData () {
       this.rooms = [
         {
@@ -99,29 +100,32 @@ export default {
         }
       ]
     },
+
     uniqueID () {
       return `_${Math.random().toString(36).substr(2, 9)}`
     },
+
     roomValidation () {
-      const roomBusy = this.bookingList.find(item => {
+      const roomBookings = this.bookingList.filter(item => {
         // Compare selected Date with all Booking period date
-        const currentDate = new Date(this.booking.date).getTime()
-        const bookedDate = new Date(item.endDate).getTime()
-        if (currentDate <= bookedDate && item.room.id === this.booking.room.id) {
+        const isValidDate = new Date(this.booking.date).getTime() <= new Date(item.endDate).getTime()
+        if (isValidDate && item.room.id === this.booking.room.id) {
           return item
         }
       })
-      if (roomBusy) {
+      if (roomBookings.length) {
         this.roomBusy = true
         this.$toast.warning(this.roomBusyMsg)
       } else {
         this.roomBusy = false
       }
     },
+
     setDate (event) {
       this.booking.date = event.target.value
       this.roomValidation()
     },
+
     mappingData () {
       /* Set data */
       this.booking.id = this.id || this.uniqueID()
@@ -132,6 +136,7 @@ export default {
       this.booking.endDate = moment(endDate).format('YYYY-MM-DD')
       this.cancel()
     },
+
     submitForm () {
       this.roomValidation()
       this.v$.$validate()
@@ -145,6 +150,7 @@ export default {
         this.cancel()
       }
     },
+
     cancel () {
       this.$router.push({ name: 'bookingList' })
     }

@@ -8,7 +8,6 @@ import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import Toaster from '@meforma/vue-toaster'
 import '@/stylesheets/index.scss'
-
 createApp(App)
   .use(store)
   .use(router)

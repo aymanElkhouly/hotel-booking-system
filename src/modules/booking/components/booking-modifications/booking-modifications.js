@@ -14,15 +14,12 @@ export default {
         phone: '',
         date: moment(new Date()).format('YYYY-MM-DD'),
         endDate: null,
-        room: {
-          id: '',
-          title: ''
-        },
+        room: { id: '', title: '' },
         duration: null,
         beds: null,
         price: null
       },
-      isValidBooking: false,
+      roomBusy: false,
       todayDate: moment(new Date()).format('YYYY-MM-DD'),
       rooms: [],
       durations: [],
@@ -41,7 +38,10 @@ export default {
         name: { required },
         phone: { required, numeric },
         date: { required },
-        room: { required },
+        room: {
+          id: { required },
+          title: { required }
+        },
         duration: { required, numeric },
         beds: { required, numeric }
       }
@@ -112,8 +112,10 @@ export default {
         }
       })
       if (roomBusy) {
-        this.isValidBooking = false
+        this.roomBusy = true
         this.$toast.warning(this.roomBusyMsg)
+      } else {
+        this.roomBusy = false
       }
     },
     setDate (event) {
@@ -131,11 +133,16 @@ export default {
       this.cancel()
     },
     submitForm () {
+      this.roomValidation()
       this.v$.$validate()
-      if (!this.v$.$error) {
+      if (!this.v$.$error && !this.roomBusy) {
         this.mappingData()
         const storeAction = this.id ? 'updateBooking' : 'bookRoom'
-        this.$store.dispatch(storeAction, this.booking)
+        this.$store.dispatch(storeAction, this.booking);
+        (storeAction === 'bookRoom')
+          ? this.$toast.warning('Booked Successfully')
+          : this.$toast.warning('Updated Successfully')
+        this.cancel()
       }
     },
     cancel () {

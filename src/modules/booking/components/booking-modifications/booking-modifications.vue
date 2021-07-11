@@ -40,7 +40,7 @@
         </div>
         <div class="col-12 col-md-6 ps-5 mb-3">
           <label for="room" class="form-label">Room Name</label>
-          <select :class="{'border-danger': v$.booking.room.$error}"
+          <select :class="{'border-danger': v$.booking.room.id.$error}"
                   class="form-select"
                   v-model="booking.room"
                   @change="roomValidation"
@@ -50,8 +50,8 @@
               {{ item.title }}
             </option>
           </select>
-          <div v-if="v$.booking.room.$error" class="text-danger">
-            {{ v$.booking.room.$errors[0].$message }}
+          <div v-if="v$.booking.room.id.$error" class="text-danger">
+            {{ v$.booking.room.id.$errors[0].$message }}
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@
           <label class="form-label"></label>
           <div class="row mt-2">
             <div class="col-6 ">
-              <button @click="submitForm" type="submit" class="btn create-btn  w-100">Submit</button>
+              <button type="submit" class="btn create-btn  w-100">Submit</button>
             </div>
             <div class="col-6">
               <button @click="cancel" type="button" class="btn btn-secondary w-100">Cancel</button>

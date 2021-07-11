@@ -1,18 +1,11 @@
-
-
 /* application wide font settings*/
 @font-face {
   font-family: $base-font;
 }
 
-* {
-
-}
-
 body {
   font-family: $base-font;
-  min-height: 100vh;
-  height: auto;
+  height: 100%;
   width: 100%;
   background-color: $base-color;
 }

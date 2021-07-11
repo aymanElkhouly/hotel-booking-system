@@ -5,6 +5,8 @@ export default {
   components: {},
   data () {
     return {
+      search: '',
+      roomSearch: '',
       today: moment(new Date()).format('YYYY-MM-DD')
     }
   },
@@ -23,6 +25,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ bookingList: 'getBookingList' })
+    ...mapGetters({ bookingList: 'getBookingList' }),
+    filteredList () {
+      return this.bookingList.filter(item => {
+        const roomFilter = item.room.title.toLowerCase().includes(this.roomSearch.toLowerCase())
+        const customerFilter = item.name.toLowerCase().includes(this.search.toLowerCase())
+        if (roomFilter && customerFilter) {
+          return item
+        }
+      })
+    }
   }
 }

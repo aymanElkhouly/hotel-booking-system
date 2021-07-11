@@ -2,14 +2,15 @@
   <section class="booking-list mt-4">
     <div class="row">
       <div class="col-12 col-md-6">
-        <input type="text" class="form-control" placeholder="Search by customer name">
+        <input v-model="search" type="text" class="form-control" placeholder="Search by customer name">
       </div>
       <div class="col-8 col-md-4 mt-md-0 mt-2">
-        <select class="form-select">
-          <option selected>Filter by room name</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+        <select class="form-select" v-model="roomSearch">
+          <option value="" selected>Filter by room name</option>
+          <option value="Sea_view1">Sea_view1</option>
+          <option value="Sea_view2">Sea_view2</option>
+          <option value="Garden_view1">Garden_view1</option>
+          <option value="Garden_view2">Garden_view2</option>
         </select>
       </div>
       <div class="col-4 col-md-2 mt-md-0 mt-2">
@@ -20,7 +21,7 @@
     </div>
     <div class="row mt-4">
       <div class="col-12">
-        <table v-if="bookingList.length" class="table table-hover table-responsive bg-white">
+        <table v-if="filteredList.length" class="table table-hover table-responsive bg-white">
           <thead>
           <tr>
             <th scope="col">#</th>
@@ -34,7 +35,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item, idx) in bookingList" :key="item.id">
+          <tr v-for="(item, idx) in filteredList" :key="item.id">
             <th scope="row">{{ idx + 1 }}</th>
             <td>{{ item.name }}</td>
             <td>{{ item.room.title }}</td>
@@ -55,7 +56,7 @@
           </tr>
           </tbody>
         </table>
-        <div v-else class="d-flex min-vh-100 w-100 justify-content-center align-items-center">
+        <div v-else class="d-flex min-vh-50 w-100 justify-content-center align-items-center">
           No Data Found
         </div>
       </div>

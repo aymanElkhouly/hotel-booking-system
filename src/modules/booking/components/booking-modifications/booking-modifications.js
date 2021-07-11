@@ -1,18 +1,23 @@
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import useVuelidate from '@vuelidate/core'
+import { numeric, required } from '@vuelidate/validators'
 
 export default {
   name: 'booking-modifications',
   props: ['id'],
-  components: {},
   data () {
     return {
+      v$: useVuelidate(),
       booking: {
         name: '',
         phone: '',
         date: moment(new Date()).format('YYYY-MM-DD'),
         endDate: null,
-        room: { id: '', title: '' },
+        room: {
+          id: '',
+          title: ''
+        },
         duration: null,
         beds: null,
         price: null
@@ -28,6 +33,18 @@ export default {
     this.getInitialData()
     if (this.id) {
       this.booking = { ...this.$store.getters.getBookingDetails(this.id) }
+    }
+  },
+  validations () {
+    return {
+      booking: {
+        name: { required },
+        phone: { required, numeric },
+        date: { required },
+        room: { required },
+        duration: { required, numeric },
+        beds: { required, numeric }
+      }
     }
   },
   methods: {
@@ -99,17 +116,12 @@ export default {
         this.$toast.warning(this.roomBusyMsg)
       }
     },
-    validateDate (event) {
+    setDate (event) {
       this.booking.date = event.target.value
       this.roomValidation()
     },
-    create () {
-      this.mappingData()
-      const storeAction = this.id ? 'updateBooking' : 'bookRoom'
-      this.$store.dispatch(storeAction, this.booking)
-    },
     mappingData () {
-      /* Simulate data */
+      /* Set data */
       this.booking.id = this.id || this.uniqueID()
       this.booking.price = this.price
       /* Set End Date = startDate + period time of booking */
@@ -117,6 +129,14 @@ export default {
       endDate.setDate(endDate.getDate() + this.booking.duration)
       this.booking.endDate = moment(endDate).format('YYYY-MM-DD')
       this.cancel()
+    },
+    submitForm () {
+      this.v$.$validate()
+      if (!this.v$.$error) {
+        this.mappingData()
+        const storeAction = this.id ? 'updateBooking' : 'bookRoom'
+        this.$store.dispatch(storeAction, this.booking)
+      }
     },
     cancel () {
       this.$router.push({ name: 'bookingList' })

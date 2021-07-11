@@ -42,14 +42,14 @@
             <td>{{ item.date }}</td>
             <td>{{ item.duration }}</td>
             <td>{{ item.beds }}</td>
-            <td>{{ item.price }}</td>
+            <td>{{ item.price }}$</td>
             <td>
               <template v-if="canModify(item.date)">
                 <span class="mx-2">
-                  <i @click="edit(item.id)" class="bi bi-pencil-square pointer"></i>
+                  <i @click="edit(item.id)" class="bi bi-pencil-square pointer fs-4"></i>
                 </span>
                 <span class="mx-2">
-                  <i @click="remove(item.id)" class="bi bi-x pointer"></i>
+                  <i @click="remove(item.id)" class="bi bi-x pointer text-danger fs-4"></i>
                 </span>
               </template>
             </td>

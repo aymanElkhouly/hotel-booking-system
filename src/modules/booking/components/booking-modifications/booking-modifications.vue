@@ -1,5 +1,6 @@
 <template>
   <section class="booking-modifications">
+    <h4 class="my-3">{{id ? 'Update Booking': 'Create Booking'}}</h4>
     <form @submit.prevent="submitForm">
       <div class="row">
         <div class="col-12 col-md-6 pe-5 mb-3">

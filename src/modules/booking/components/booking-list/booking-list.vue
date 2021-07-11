@@ -57,7 +57,7 @@
           </tbody>
         </table>
         <div v-else class="d-flex min-vh-50 w-100 justify-content-center align-items-center">
-          No Data Found
+          <h3>No Data Found</h3>
         </div>
       </div>
     </div>

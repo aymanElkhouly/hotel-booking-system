@@ -106,14 +106,16 @@ export default {
     },
 
     roomValidation () {
-      const roomBookings = this.bookingList.filter(item => {
-        // Compare selected Date with all Booking period date
-        const isValidDate = new Date(this.booking.date).getTime() <= new Date(item.endDate).getTime()
-        if (isValidDate && item.room.id === this.booking.room.id) {
-          return item
+      const busyRoom = this.bookingList.find(item => {
+        if (this.id !== item.id) {
+          // Compare selected Date with all Booking period date
+          const isValidDate = new Date(this.booking.date).getTime() <= new Date(item.endDate).getTime()
+          if (isValidDate && item.room.id === this.booking.room.id) {
+            return item
+          }
         }
       })
-      if (roomBookings.length) {
+      if (busyRoom) {
         this.roomBusy = true
         this.$toast.warning(this.roomBusyMsg)
       } else {
@@ -145,8 +147,8 @@ export default {
         const storeAction = this.id ? 'updateBooking' : 'bookRoom'
         this.$store.dispatch(storeAction, this.booking);
         (storeAction === 'bookRoom')
-          ? this.$toast.warning('Booked Successfully')
-          : this.$toast.warning('Updated Successfully')
+          ? this.$toast.success('Booked Successfully')
+          : this.$toast.success('Updated Successfully')
         this.cancel()
       }
     },

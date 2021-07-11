@@ -1,26 +1,28 @@
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 export default {
   name: 'booking-list',
   components: {},
   data () {
     return {
-
+      today: moment(new Date()).format('YYYY-MM-DD')
     }
-  },
-  created () {
-
-  },
-  mounted () {
   },
   methods: {
     create () {
       this.$router.push({ name: 'createBooking' })
     },
-    edit () {
-      this.$router.push({ name: 'editBooking', params: { id: '10' } })
+    edit (id) {
+      this.$router.push({ name: 'editBooking', params: { id: id } })
+    },
+    remove (id) {
+      this.$store.dispatch('removeBooking', id)
+    },
+    canModify (date) {
+      return new Date(date).getTime() >= new Date(this.today).getTime()
     }
   },
   computed: {
-    ...mapGetters({ bookingList: 'getBookings' })
+    ...mapGetters({ bookingList: 'getBookingList' })
   }
 }

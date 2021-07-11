@@ -1,81 +1,66 @@
 <template>
- <section class="booking-list mt-4">
-   <div class="row">
-     <div class="col-12 col-md-6">
-       <input type="text" class="form-control"  placeholder="Search by customer name">
-     </div>
-     <div class="col-8 col-md-4 mt-md-0 mt-2">
-       <select class="form-select">
-         <option selected>Filter by room name</option>
-         <option value="1">One</option>
-         <option value="2">Two</option>
-         <option value="3">Three</option>
-       </select>
-     </div>
-     <div class="col-4 col-md-2 mt-md-0 mt-2">
-       <button @click="create" class="btn btn-primary float-end clearfix create-btn">
-         +  Create
-       </button>
-     </div>
-   </div>
-   <div class="row mt-4">
-     <div class="col-12">
-       <table class="table table-hover table-responsive bg-white">
-         <thead>
-         <tr>
-           <th scope="col">#</th>
-           <th scope="col">Customer Name</th>
-           <th scope="col">Room Name</th>
-           <th scope="col">Booking Date</th>
-           <th scope="col">Booking Duration</th>
-           <th scope="col"># Of Beds</th>
-           <th scope="col">price</th>
-           <th scope="col">Actions</th>
-         </tr>
-         </thead>
-         <tbody>
-         <tr>
-           <th scope="row">1</th>
-           <td>Mark</td>
-           <td>Otto</td>
-           <td>@mdo</td>
-           <td>Mark</td>
-           <td>Otto</td>
-           <td>@mdo</td>
-           <td>
-             <span class="mx-1">
-               <i @click="edit" class="bi bi-pencil-square"></i>
-             </span>
-             <span class="mx-1">
-               <i class="bi bi-x"></i>
-             </span>
-           </td>
-         </tr>
-         <tr>
-           <th scope="row">2</th>
-           <td>Mark</td>
-           <td>Otto</td>
-           <td>@mdo</td>
-           <td>Mark</td>
-           <td>Otto</td>
-           <td>@mdo</td>
-           <td>@mdo</td>
-         </tr>
-         <tr>
-           <th scope="row">3</th>
-           <td>Mark</td>
-           <td>Otto</td>
-           <td>@mdo</td>
-           <td>Mark</td>
-           <td>Otto</td>
-           <td>@mdo</td>
-           <td>@mdo</td>
-         </tr>
-         </tbody>
-       </table>
-     </div>
-   </div>
- </section>
+  <section class="booking-list mt-4">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <input type="text" class="form-control" placeholder="Search by customer name">
+      </div>
+      <div class="col-8 col-md-4 mt-md-0 mt-2">
+        <select class="form-select">
+          <option selected>Filter by room name</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+      <div class="col-4 col-md-2 mt-md-0 mt-2">
+        <button @click="create" class="btn btn-primary float-end clearfix create-btn">
+          + Create
+        </button>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12">
+        <table v-if="bookingList.length" class="table table-hover table-responsive bg-white">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Room Name</th>
+            <th scope="col">Booking Date</th>
+            <th scope="col">Booking Duration</th>
+            <th scope="col"># Of Beds</th>
+            <th scope="col">price</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(item, idx) in bookingList" :key="item.id">
+            <th scope="row">{{ idx + 1 }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.room.title }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.duration }}</td>
+            <td>{{ item.beds }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+              <template v-if="canModify(item.date)">
+                <span class="mx-2">
+                  <i @click="edit(item.id)" class="bi bi-pencil-square pointer"></i>
+                </span>
+                <span class="mx-2">
+                  <i @click="remove(item.id)" class="bi bi-x pointer"></i>
+                </span>
+              </template>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div v-else class="d-flex min-vh-100 w-100 justify-content-center align-items-center">
+          No Data Found
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script src="./booking-list.js"></script>

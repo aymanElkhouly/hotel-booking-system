@@ -46,7 +46,6 @@
                   v-model="booking.room"
                   @change="roomValidation"
                   id="room">
-            <!--            <option value="" disabled selected>Select Room</option>-->
             <option v-for="item in rooms" :key="item.id" :value="item">
               {{ item.title }}
             </option>
@@ -62,6 +61,7 @@
           <select :class="{'border-danger': v$.booking.duration.$error}"
                   class="form-select"
                   v-model="booking.duration"
+                  @change="roomValidation"
                   id="duration">
             <!--            <option disabled selected>Select Duration</option>-->
             <option v-for="item in durations" :value="item.id" :key="item.id">
@@ -78,7 +78,6 @@
                   class="form-select"
                   v-model="booking.beds"
                   id="beds" >
-            <!--            <option selected disabled>Select Beds</option>-->
             <option value="1">1</option>
             <option value="2">2</option>
           </select>

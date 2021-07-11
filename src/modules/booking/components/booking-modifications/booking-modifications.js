@@ -27,15 +27,12 @@ export default {
   mounted () {
     this.getInitialData()
   },
-
   validations () {
     return {
       booking: {
         name: { required },
         phone: { required, numeric },
-        date: {
-          required
-        },
+        date: { required },
         room: {
           id: { required },
           title: { required }
@@ -45,7 +42,6 @@ export default {
       }
     }
   },
-
   methods: {
 
     getInitialData () {
@@ -59,15 +55,28 @@ export default {
     },
 
     roomValidation () {
+      // check if room is busy based on periods & room id
       const busyRoom = this.bookingList.filter(item => {
         if (this.id !== item.id) {
-          // Compare selected Date with all Booking period date
-          const currentDate = new Date(this.booking.date).getTime()
-          const startPeriodDate = new Date(item.date).getTime()
-          const lastPeriodDate = new Date(item.endDate).getTime()
-          const final = currentDate >= startPeriodDate && currentDate <= lastPeriodDate
-          // Check if current date inside another periods or not
-          if (final && item.room.id === this.booking.room.id) {
+          // Set Start & end dates as time to compare it
+          const bookingDate = {
+            start: new Date(this.booking.date).getTime(),
+            end: new Date(this.getFutureDate(this.booking.date, this.booking.duration)).getTime()
+          }
+          const periods = {
+            start: new Date(item.date).getTime(),
+            end: new Date(item.endDate).getTime()
+          }
+          // Compare Cases //
+          /// ///////////////
+          // Case 1- check if start of booking not inside on another period
+          const case1 = bookingDate.start >= periods.start && bookingDate.start <= periods.end
+          // Case 2- check if end of booking not inside on another period
+          const case2 = bookingDate.end >= periods.start && bookingDate.end <= periods.end
+          // Case 3- check if period not inside in current booking period
+          const case3 = bookingDate.start < periods.start && bookingDate.end > periods.end
+          const checkRoom = this.booking.room.id === item.room.id
+          if ((case1 || case2 || case3) && checkRoom) {
             return item
           }
         }
@@ -90,10 +99,13 @@ export default {
       this.booking.id = this.id || this.uniqueID()
       this.booking.price = this.price
       /* Set End Date = startDate + period time of booking */
-      const endDate = new Date(this.booking.date)
-      endDate.setDate(endDate.getDate() + this.booking.duration)
-      this.booking.endDate = moment(endDate).format('YYYY-MM-DD')
-      this.cancel()
+      this.booking.endDate = this.getFutureDate(this.booking.date, this.booking.duration)
+    },
+    getFutureDate (currentDate, days = 0) {
+      days = (days > 1) ? days : 0
+      const finalDate = new Date(currentDate)
+      finalDate.setDate(finalDate.getDate() + days)
+      return moment(finalDate).format('YYYY-MM-DD')
     },
     setStoreData () {
       const storeAction = this.id ? 'updateBooking' : 'bookRoom'

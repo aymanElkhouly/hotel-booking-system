@@ -1,9 +1,17 @@
 .booking-list{
   height: 100%;
   .create-btn{
-    word-spacing: 2rem;
+    /*word-spacing: 2rem;*/
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
   .min-vh-50{
     min-height: 50vh;
+  }
+  .content{
+    table{
+      min-width: 960px;
+    }
   }
 }

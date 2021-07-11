@@ -19,6 +19,7 @@ export default {
     },
     remove (id) {
       this.$store.dispatch('removeBooking', id)
+      this.$toast.success('Removed Successfully')
     },
     canModify (date) {
       return new Date(date).getTime() >= new Date(this.today).getTime()
